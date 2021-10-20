@@ -3,9 +3,9 @@ package com.board;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testng.annotations.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
@@ -18,6 +18,7 @@ class MapperTests {
 
     @Autowired
     private BoardMapper boardMapper;
+    private Object criteria;
 
     @Test
     public void testOfInsert() {
@@ -40,6 +41,7 @@ class MapperTests {
             boardMapper.insertBoard(params);
         }
     }
+
 
     @Test
     public void testSelectList() {
