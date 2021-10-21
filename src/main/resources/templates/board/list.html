@@ -13,7 +13,7 @@
         <th>제목</th>
         <th>작성자</th>
         <th>등록일</th>
-        <th>조회 수</th>
+        <th>조회수</th>
       </tr>
       </thead>
       <tbody>
@@ -36,6 +36,21 @@
       <a th:href="@{/board/write.do}" class="btn btn-primary waves-effect waves-light">Write</a>
     </div>
 
+    <th:block layout:fragment="paging">
+      <nav th:replace="board/fragments/common :: pagination"></nav>
+    </th:block>
   </div>
+</th:block>
+
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function movePage(uri, queryString) {
+      location.href = uri + queryString;
+    }
+
+    /*]]>*/
+  </script>
 </th:block>
 </html>

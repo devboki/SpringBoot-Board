@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDTO {
+public class BoardDTO extends CommonDTO {
 
     private Long idx;        //번호(PK)
     private String title;    //제목

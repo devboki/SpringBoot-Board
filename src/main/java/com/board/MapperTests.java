@@ -43,6 +43,7 @@ class MapperTests {
     }
 
 
+    /*
     @Test
     public void testSelectList() {
         int boardTotalCount = boardMapper.selectBoardTotalCount();
@@ -59,6 +60,7 @@ class MapperTests {
             }
         }
     }
+    */
 
     @Test
     public void testOfSelectDetail() {
