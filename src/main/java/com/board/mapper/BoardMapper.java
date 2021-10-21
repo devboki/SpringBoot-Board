@@ -15,5 +15,5 @@ public interface BoardMapper {
     public int deleteBoard(Long idx);            //삭제
     public List<BoardDTO> selectBoardList(); //게시글 목록 조회
     public int selectBoardTotalCount(); //delete_yn 'N' 게시글 개수 조회
-
+    public boolean cntPlus(Long idx); //조회수 카운트
 }

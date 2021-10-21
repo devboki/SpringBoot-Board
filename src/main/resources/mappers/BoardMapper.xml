@@ -90,4 +90,12 @@
             delete_yn = 'N'
     </select>
 
+    <update id="cntPlus" parameterType="long">
+        UPDATE tb_board
+        SET
+            view_cnt = view_cnt+1
+        WHERE
+            idx = #{idx}
+    </update>
+
 </mapper>

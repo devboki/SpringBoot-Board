@@ -74,7 +74,7 @@ public class BoardController extends UiUtils {
             return "redirect:/board/list.do";
         }
         model.addAttribute("board", board);
-
+        boardService.cntPlus(idx);
         return "board/view";
     }
 
