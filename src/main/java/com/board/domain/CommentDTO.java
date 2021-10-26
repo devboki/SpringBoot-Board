@@ -7,9 +7,12 @@ import lombok.Setter;
 @Setter
 public class CommentDTO extends CommonDTO {
 
-    private Long idx;
-    private Long boardIdx;
-    private String content;
-    private String writer;
+	private Long idx;
+
+	private Long boardIdx;
+
+	private String content;
+
+	private String writer;
 
 }
