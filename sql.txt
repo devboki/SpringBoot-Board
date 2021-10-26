@@ -1,4 +1,4 @@
-//board table
+----- board table ----------------------------------
 
 CREATE TABLE tb_board(
 idx INT NOT NULL AUTO_INCREMENT COMMENT '번호(PK)',
@@ -17,7 +17,7 @@ PRIMARY KEY(idx)
 
 
 
-//comment table
+----- comment table ----------------------------------
 
 CREATE TABLE tb_comment (
     idx INT NOT NULL AUTO_INCREMENT COMMENT '번호 (PK)',
@@ -39,7 +39,7 @@ WHERE TABLE_SCHEMA = 'test';
 
 
 
-//file table
+----- file table ----------------------------------
 
 CREATE TABLE tb_attach (
     idx INT NOT NULL AUTO_INCREMENT COMMENT '파일 번호 (PK)',
@@ -52,3 +52,9 @@ CREATE TABLE tb_attach (
     delete_time DATETIME NULL COMMENT '삭제일',
     PRIMARY KEY (idx)
 ) comment '첨부 파일';
+
+alter table tb_attach add constraint fk_attach_board_idx foreign key (board_idx) references tb_board(idx);
+
+select *
+from information_schema.TABLE_CONSTRAINTS
+where TABLE_SCHEMA = 'board';
