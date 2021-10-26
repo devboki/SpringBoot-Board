@@ -18,6 +18,7 @@ import com.board.constant.Method;
 import com.board.domain.BoardDTO;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class BoardController extends UiUtils {
@@ -41,10 +42,10 @@ public class BoardController extends UiUtils {
 	}
 
 	@PostMapping(value = "/board/register.do")
-	public String registerBoard(@ModelAttribute("params") final BoardDTO params, Model model) {
+	public String registerBoard(final BoardDTO params, final MultipartFile[] files, Model model) {
 		Map<String, Object> pagingParams = getPagingParams(params);
 		try {
-			boolean isRegistered = boardService.registerBoard(params);
+			boolean isRegistered = boardService.registerBoard(params, files);
 			if (isRegistered == false) {
 				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
 			}
