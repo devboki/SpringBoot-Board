@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.board.domain.AttachDTO;
 import com.board.paging.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -36,6 +37,9 @@ public class BoardController extends UiUtils {
 				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
 			}
 			model.addAttribute("board", board);
+
+			List<AttachDTO> fileList = boardService.getAttachFileList(idx);
+			model.addAttribute("fileList", fileList);
 		}
 
 		return "board/write";
