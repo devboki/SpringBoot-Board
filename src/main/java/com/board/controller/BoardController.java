@@ -1,11 +1,17 @@
 package com.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.board.domain.AttachDTO;
-import com.board.paging.Criteria;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -14,12 +20,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.board.constant.Method;
+import com.board.domain.AttachDTO;
 import com.board.domain.BoardDTO;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
-import org.springframework.web.multipart.MultipartFile;
+import com.board.paging.Criteria;
 
 @Controller
 public class BoardController extends UiUtils {
@@ -83,6 +91,9 @@ public class BoardController extends UiUtils {
 		}
 		model.addAttribute("board", board);
 
+		List<AttachDTO> fileList = boardService.getAttachFileList(idx); // 추가된 로직
+		model.addAttribute("fileList", fileList); // 추가된 로직
+
 		return "board/view";
 	}
 
@@ -120,4 +131,38 @@ public class BoardController extends UiUtils {
 		return params;
 	}
 
+	@GetMapping("/board/download.do")
+	public void downloadAttachFile(@RequestParam(value = "idx", required = false) final Long idx, Model model, HttpServletResponse response) {
+
+		if (idx == null) throw new RuntimeException("올바르지 않은 접근입니다.");
+
+		AttachDTO fileInfo = boardService.getAttachDetail(idx);
+		if (fileInfo == null || "Y".equals(fileInfo.getDeleteYn())) {
+			throw new RuntimeException("파일 정보를 찾을 수 없습니다.");
+		}
+
+		String uploadDate = fileInfo.getInsertTime().format(DateTimeFormatter.ofPattern("yyMMdd"));
+		String uploadPath = Paths.get("D:", "develop", "upload", uploadDate).toString();
+
+		String filename = fileInfo.getOriginalName();
+		File file = new File(uploadPath, fileInfo.getSaveName());
+
+		try {
+			byte[] data = FileUtils.readFileToByteArray(file);
+			response.setContentType("application/octet-stream");
+			response.setContentLength(data.length);
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(filename, "UTF-8") + "\";");
+
+			response.getOutputStream().write(data);
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+
+		} catch (IOException e) {
+			throw new RuntimeException("파일 다운로드에 실패하였습니다.");
+
+		} catch (Exception e) {
+			throw new RuntimeException("시스템에 문제가 발생하였습니다.");
+		}
+	}
 }
