@@ -45,19 +45,16 @@ public class BoardController extends UiUtils {
 				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
 			}
 			model.addAttribute("board", board);
-
-			List<AttachDTO> fileList = boardService.getAttachFileList(idx);
-			model.addAttribute("fileList", fileList);
 		}
 
 		return "board/write";
 	}
 
 	@PostMapping(value = "/board/register.do")
-	public String registerBoard(final BoardDTO params, final MultipartFile[] files, Model model) {
+	public String registerBoard(@ModelAttribute("params") final BoardDTO params, Model model) {
 		Map<String, Object> pagingParams = getPagingParams(params);
 		try {
-			boolean isRegistered = boardService.registerBoard(params, files);
+			boolean isRegistered = boardService.registerBoard(params);
 			if (isRegistered == false) {
 				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
 			}

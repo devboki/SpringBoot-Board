@@ -1,7 +1,9 @@
 package com.board.util;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.board.paging.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,4 +26,15 @@ public class UiUtils {
         return "utils/message-redirect";
     }
 
+    public Map<String, Object> getPagingParams(Criteria criteria) {
+
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("currentPageNo", criteria.getCurrentPageNo());
+        params.put("recordsPerPage", criteria.getRecordsPerPage());
+        params.put("pageSize", criteria.getPageSize());
+        params.put("searchType", criteria.getSearchType());
+        params.put("searchKeyword", criteria.getSearchKeyword());
+
+        return params;
+    }
 }
