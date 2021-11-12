@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>INDEX</title>
+</head>
+<body>
+<h1>- MAIN -</h1>
+<hr>
+
+<a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+<a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+<a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
+<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
+
+<!-- sec:authorize = role에 따라 보이는 메뉴가 다르게 설정
+     isAnonymous() 회원이 아닐 경우 로그인, 회원가입 링크 노출
+     isAuthenticated() 회원일 경우 로그아웃 링크 노출
+     hasRole() 특정 role (like admin)일 경우 링크 노출 -->
+
+</body>
+</html>
