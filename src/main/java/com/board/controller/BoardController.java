@@ -91,6 +91,7 @@ public class BoardController extends UiUtils {
 		List<AttachDTO> fileList = boardService.getAttachFileList(idx); // 추가된 로직
 		model.addAttribute("fileList", fileList); // 추가된 로직
 
+		boardService.cntPlus(idx);
 		return "board/view";
 	}
 

@@ -121,4 +121,8 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.selectAttachDetail(idx);
 	}
 
+	@Override
+	public boolean cntPlus(Long idx) {
+		return boardMapper.cntPlus(idx);
+	}
 }

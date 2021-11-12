@@ -16,5 +16,5 @@ public interface BoardService {
 	public List<BoardDTO> getBoardList(BoardDTO params);
 	public List<AttachDTO> getAttachFileList(Long boardIdx);
 	public AttachDTO getAttachDetail(Long idx);
-
+	public boolean cntPlus(Long idx);
 }
